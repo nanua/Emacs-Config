@@ -19,9 +19,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-startup-truncated t)
  '(package-selected-packages
    (quote
-    (jdee matlab-mode cdlatex auctex flycheck elpy company-jedi nlinum github-theme github-modern-theme))))
+    (jdee matlab-mode cdlatex auctex flycheck elpy company-jedi nlinum github-modern-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -164,3 +165,42 @@
 
 ;;Config org-mode
 (setq org-startup-indented t)
+(add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
+
+;;No backup
+(setq make-backup-files nil)
+
+;; copy region or whole line
+(global-set-key "\M-w"
+(lambda ()
+  (interactive)
+  (if mark-active
+      (kill-ring-save (region-beginning)
+      (region-end))
+    (progn
+     (kill-ring-save (line-beginning-position)
+     (line-end-position))
+     (message "copied line")))))
+
+
+;; kill region or whole line
+(global-set-key "\C-w"
+(lambda ()
+  (interactive)
+  (if mark-active
+      (kill-region (region-beginning)
+   (region-end))
+    (progn
+     (kill-region (line-beginning-position)
+  (line-end-position))
+     (message "killed line")))))
+
+;; enable elpy jedi backend
+(setq elpy-rpc-backend "jedi")
+
+;; set python encoding to utf-8
+; import sys;sys.stdout.encoding;sys.stdin.encoding to check
+(setenv "PYTHONIOENCODING" "utf-8")
+(setenv "LANG" "en_US.UTF-8")
+
+;;installed package:auctex, cdlatex, company-jedi, elpy, flycheck, github-modern-theme, matlab-mode, nlinum
