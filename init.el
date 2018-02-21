@@ -22,7 +22,8 @@
  '(org-startup-truncated t)
  '(package-selected-packages
    (quote
-    (nlinum flycheck js2-mode auto-complete jdee matlab-mode cdlatex auctex elpy company-jedi github-modern-theme))))
+    (github-modern-theme atom-one-dark-theme nlinum flycheck js2-mode auto-complete jdee matlab-mode cdlatex auctex elpy company-jedi)))
+ '(show-paren-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -41,8 +42,8 @@
         scroll-conservatively 10000)
 		
 ;;Set transparent
-(set-frame-parameter (selected-frame) 'alpha (list 90 80))
-(add-to-list 'default-frame-alist (cons 'alpha (list 90 80)))
+(set-frame-parameter (selected-frame) 'alpha (list 95 85))
+(add-to-list 'default-frame-alist (cons 'alpha (list 95 85)))
 (setq-default cursor-type '(bar . 8))
 
 ;;Set paren match
@@ -55,18 +56,13 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 
-;;Set Github theme
-(load-theme 'github-modern t)
+;;Set theme
+(load-theme 'atom-one-dark t)
+;(load-theme 'github-modern t)
 
 ;;Set English font
 (set-face-attribute
- 'default nil :font "Consolas 14") 
- 
-;;Set Chinese font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font (frame-parameter nil 'font)
-                    charset
-                    (font-spec :family "Microsoft Yahei Mono")))	
+ 'default nil :font "21") 
 					
 ;;Open the recent file
 (desktop-save-mode 1)
@@ -222,3 +218,15 @@
 ;;disable flymake-mode in python
 (delete '("\\.py?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
 ;(defun flymake-xml-init ())
+
+;;disable tool bar
+(tool-bar-mode 0)
+
+;;;Emacs also save config in destop file
+
+;;;Emacs client
+;;;in .bashrc:
+;;;alias emacs='emacsclient --no-wait'
+
+;;set python interpreters
+(setq python-shell-interpreter "python3")
