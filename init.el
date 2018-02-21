@@ -62,7 +62,13 @@
 
 ;;Set English font
 (set-face-attribute
- 'default nil :font "21") 
+ 'default nil :font "Consolas 13") 
+ 
+;;Set Chinese font
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font)
+                    charset
+                    (font-spec :family "simsun")))	
 					
 ;;Open the recent file
 (desktop-save-mode 1)
@@ -223,10 +229,3 @@
 (tool-bar-mode 0)
 
 ;;;Emacs also save config in destop file
-
-;;;Emacs client
-;;;in .bashrc:
-;;;alias emacs='emacsclient --no-wait'
-
-;;set python interpreters
-(setq python-shell-interpreter "python3")
