@@ -22,7 +22,7 @@
  '(org-startup-truncated t)
  '(package-selected-packages
    (quote
-    (jdee matlab-mode cdlatex auctex flycheck elpy company-jedi nlinum github-modern-theme))))
+    (nlinum flycheck js2-mode auto-complete jdee matlab-mode cdlatex auctex elpy company-jedi github-modern-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -75,7 +75,9 @@
 (elpy-enable)
 (add-to-list 'python-shell-completion-native-disabled-interpreters "python")
 (setq-default cursor-type 'bar)
-(global-linum-mode t)
+
+;;Enable line number
+(global-nlinum-mode t)
 
 ;;Complete paren
 (electric-pair-mode t)
@@ -149,9 +151,10 @@
 		("displaymath" "\\begin{displaymath}\n?\n\\end{displaymath}" nil)
 		("align" "\\begin{align*}\n?\n\\end{align*}" nil)
         ("figure" "\\begin{figure}\n\\centering\n\\includegraphics[width=12cm]{?}\n\\caption{}\n\\label{fig:}\n\\end{figure}" nil)
-		("table" "\\begin{center}\n\\begin{tabular}\n?\n\\end{tabular}\n\\end{center}" nil)
+		("table" "\\begin{table}\n\\centering\n\\caption{\label{tab:?}}\n\\begin{tabular}\n\n\\end{tabular}\n\\end{table}" nil)
 		("tabularx" "\\begin{table}\n\\begin{tabularx}{\\textwidth}{?}\n\\toprule[1.5pt]\n\n\\midrule[1pt]\n\n\\bottomrule[1.5pt]\n\\end{tabularx}\n\\end{table}" nil)
-		("longtable" "\\begin{longtable}{?}\n\\toprule[1.5pt]\n\n\\midrule[1pt]\n\\endfirsthead\n\\toprule[1.5pt]\n\n\\endhead\n\\bottomrule[1.5pt]\n\\endfoot\n\n\\end{longtable}" nil)))
+		("longtable" "\\begin{longtable}{?}\n\\toprule[1.5pt]\n\n\\midrule[1pt]\n\\endfirsthead\n\\toprule[1.5pt]\n\n\\endhead\n\\bottomrule[1.5pt]\n\\endfoot\n\n\\end{longtable}" nil)
+		("texttt" "\texttt{?}" nil)))
 (setq cdlatex-command-alist
   '(("enu" "Insert enumerate env"   "" cdlatex-environment ("enumerate") t nil)
     ("ite" "Insert itemize env" "" cdlatex-environment ("itemize") t nil)
@@ -161,7 +164,8 @@
 	("ltab" "Insert longtable env" "" cdlatex-environment ("longtable") t nil)
 	("utab" "Insert tabularx env" "" cdlatex-environment ("tabularx") t nil)
 	("dismath" "Insert displaymath env" "" cdlatex-environment ("displaymath") t nil)
-	("ali" "Insert align env" "" cdlatex-environment ("align") t nil)))
+	("ali" "Insert align env" "" cdlatex-environment ("align") t nil)
+	("tt" "Insert texttt env" "" cdlatex-environment ("texttt") t nil)))
 
 ;;Config org-mode
 (setq org-startup-indented t)
@@ -203,4 +207,18 @@
 (setenv "PYTHONIOENCODING" "utf-8")
 (setenv "LANG" "en_US.UTF-8")
 
-;;installed package:auctex, cdlatex, company-jedi, elpy, flycheck, github-modern-theme, matlab-mode, nlinum
+;;set python interpreters
+;(setq python-shell-interpreter "apython")
+
+;;set up js2-mode
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+;;set up auto-complete
+(ac-config-default)
+(defadvice auto-complete-mode (around disable-auto-complete-for-python)
+  (unless (eq major-mode 'python-mode) ad-do-it))
+(ad-activate 'auto-complete-mode)
+
+;;disable flymake-mode in python
+(delete '("\\.py?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
+;(defun flymake-xml-init ())
