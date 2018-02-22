@@ -86,9 +86,6 @@
 ;;Ban welcome page
 (setq inhibit-startup-message t)
 
-;;Pair paren
-(electric-pair-mode 1)
-
 ;;Set up Server
 (server-start)
 
