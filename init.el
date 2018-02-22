@@ -42,8 +42,8 @@
         scroll-conservatively 10000)
 		
 ;;Set transparent
-(set-frame-parameter (selected-frame) 'alpha (list 95 85))
-(add-to-list 'default-frame-alist (cons 'alpha (list 95 85)))
+(set-frame-parameter (selected-frame) 'alpha (list 93 90))
+(add-to-list 'default-frame-alist (cons 'alpha (list 93 90)))
 (setq-default cursor-type '(bar . 8))
 
 ;;Set paren match
