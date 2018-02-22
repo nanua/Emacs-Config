@@ -42,8 +42,8 @@
         scroll-conservatively 10000)
 		
 ;;Set transparent
-(set-frame-parameter (selected-frame) 'alpha (list 95 85))
-(add-to-list 'default-frame-alist (cons 'alpha (list 95 85)))
+(set-frame-parameter (selected-frame) 'alpha (list 93 90))
+(add-to-list 'default-frame-alist (cons 'alpha (list 93 90)))
 (setq-default cursor-type '(bar . 8))
 
 ;;Set paren match
@@ -68,7 +68,7 @@
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
   (set-fontset-font (frame-parameter nil 'font)
                     charset
-                    (font-spec :family "simsun")))	
+                    (font-spec :family "华文中宋")))
 					
 ;;Open the recent file
 (desktop-save-mode 1)
