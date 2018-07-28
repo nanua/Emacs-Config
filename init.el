@@ -1,4 +1,4 @@
-﻿;;acc start-up
+;;acc start-up
 (defvar default-file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 (setq gc-cons-threshold 100000000)
@@ -22,7 +22,7 @@
  '(org-startup-truncated t)
  '(package-selected-packages
    (quote
-    (github-modern-theme atom-one-dark-theme nlinum flycheck js2-mode auto-complete jdee matlab-mode cdlatex auctex elpy company-jedi)))
+    (tango-plus-theme spacemacs-theme github-modern-theme atom-one-dark-theme nlinum flycheck js2-mode auto-complete jdee matlab-mode cdlatex auctex elpy company-jedi)))
  '(show-paren-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -31,16 +31,19 @@
  ;; If there is more than one, they won't work right.
  )
 
+;;Fix MacOS Chinese input problem
+(setq redisplay-dont-pause nil)
+
 ;;Smooth mouth scroll
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
- 
+
 ;;Set scroll setting
 (setq scroll-step 1
         scroll-margin 3
         scroll-conservatively 10000)
-		
+
 ;;Set transparent
 (set-frame-parameter (selected-frame) 'alpha (list 93 90))
 (add-to-list 'default-frame-alist (cons 'alpha (list 93 90)))
@@ -59,11 +62,15 @@
 ;;Set theme
 (load-theme 'atom-one-dark t)
 ;(load-theme 'github-modern t)
+;(load-theme 'tango-plus t)
+
+;;Set mouse color
+(set-mouse-color "red")
 
 ;;Set English font
 (set-face-attribute
- 'default nil :font "21") 
-					
+ 'default nil :font "21")
+
 ;;Open the recent file
 (desktop-save-mode 1)
 
@@ -87,7 +94,7 @@
 (setq inhibit-startup-message t)
 
 ;;Set up Server
-(server-start)
+;(server-start)
 
 ;;Resolve Chinese encode problem
 (set-language-environment 'Chinese-GB)
@@ -105,15 +112,17 @@
 (prefer-coding-system 'utf-8-unix)
 
 ;;Reread file from disk
-(defun refresh-file ()  
-  (interactive)  
-  (revert-buffer t (not (buffer-modified-p)) t))  
-(global-set-key [(control f5)] 'refresh-file)  
+(defun refresh-file ()
+  (interactive)
+  (revert-buffer t (not (buffer-modified-p)) t))
+(global-set-key [(control f5)] 'refresh-file)
 
 ;;Enable delete mode
 (delete-selection-mode 1)
 
 ;;Config AUCTex
+(setenv "PATH" "/usr/local/bin:/Library/TeX/texbin/:$PATH" t)  ;required in macos
+(setq exec-path (append exec-path '("/Library/TeX/texbin")))  ;required in macos
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
@@ -123,9 +132,9 @@
 "%(PDF)%(latex)%(extraopts) %S%(PDFout)")
 ))
 (setq-default fill-column 100)
-(setq preview-gs-command "C:/Program Files (x86)/gs/gs9.22/bin/gswin32c.exe")
+(setq preview-gs-command "gs")
 (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
-(add-hook 'LaTeX-mode-hook 
+(add-hook 'LaTeX-mode-hook
           (lambda()
              (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
              (setq TeX-command-default "XeLaTeX")
@@ -133,8 +142,8 @@
 (electric-pair-mode)
 (add-hook 'LaTeX-mode-hook
           '(lambda ()
-            (define-key LaTeX-mode-map (kbd "(") 'self-insert-command)))
-			 
+             (define-key LaTeX-mode-map (kbd "(") 'self-insert-command)))
+
 ;;Config CDLatex
 (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)
 (setq cdlatex-env-alist
