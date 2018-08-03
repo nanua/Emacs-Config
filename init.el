@@ -94,14 +94,32 @@
 (setq inhibit-startup-message t)
 
 ;;Set up Server
-;(server-start)
+(server-start)
 
 ;;Resolve Chinese encode problem
 (set-language-environment 'Chinese-GB)
-(set-default buffer-file-coding-system 'utf-8-unix)
-(set-default-coding-systems 'utf-8-unix)
-(setq-default pathname-coding-system 'euc-cn)
-(setq file-name-coding-system 'euc-cn)
+(setq locale-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(set-buffer-file-coding-system 'utf-8)
+(set-default buffer-file-coding-system 'utf8)
+(set-default-coding-systems 'utf-8)
+(set-clipboard-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(modify-coding-system-alist 'process "*" 'utf-8)
+(setq default-process-coding-system '(utf-8 . utf-8))
+(setq-default pathname-coding-system 'utf-8)
+(set-file-name-coding-system 'utf-8)
+(defun change-shell-mode-coding ()
+  (progn
+    (set-terminal-coding-system 'gbk)
+    (set-keyboard-coding-system 'gbk)
+    (set-selection-coding-system 'gbk)
+    (set-buffer-file-coding-system 'gbk)
+    (set-file-name-coding-system 'gbk)
+    (modify-coding-system-alist 'process "*" 'gbk)
+    (set-buffer-process-coding-system 'gbk 'gbk)
+    (set-file-name-coding-system 'gbk)))
 (prefer-coding-system 'cp950)
 (prefer-coding-system 'gb2312)
 (prefer-coding-system 'cp936)
@@ -143,6 +161,9 @@
 (add-hook 'LaTeX-mode-hook
           '(lambda ()
              (define-key LaTeX-mode-map (kbd "(") 'self-insert-command)))
+(setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
+(setq TeX-view-program-list
+'(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
 
 ;;Config CDLatex
 (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)
@@ -168,6 +189,7 @@
 	("dismath" "Insert displaymath env" "" cdlatex-environment ("displaymath") t nil)
 	("ali" "Insert align env" "" cdlatex-environment ("align") t nil)
 	("tt" "Insert texttt env" "" cdlatex-environment ("texttt") t nil)))
+
 
 ;;Config org-mode
 (setq org-startup-indented t)
@@ -236,3 +258,9 @@
 
 ;;set python interpreters
 (setq python-shell-interpreter "python3")
+
+;;open new file in existing frame
+(setq ns-pop-up-frames nil)
+
+;;fix title bar color
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
